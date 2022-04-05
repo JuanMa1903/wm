@@ -48,11 +48,6 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="container">
-        <div className="jumbotron jumbotron-fluid mb-3 pt-0 pb-0 bg-lightblue position-relative">
-          <h4 className="mb-3 secondfont mb-3 font-weight-bold">Members:</h4>
-        </div>
-      </div>
     </div>
   );
 }
