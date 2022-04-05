@@ -74,6 +74,19 @@ body {
   text-align: left;
   background-color: #fff;
 }
+.containerP{
+  display: flex;
+  max-width: 70%;
+  margin: auto;
+  text-align: center;
+}
+.ch{
+  border: 2px solid white;
+  margin: 20px;
+  padding: 2%;
+  border-radius: 10px;
+}
+
 
 [tabindex="-1"]:focus {
   outline: 0 !important;

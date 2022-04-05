@@ -1,40 +1,59 @@
-import  React, {useEffect} from "react";
+import React, { useEffect, useState } from "react";
 
 function App() {
+  const getwm = async (owner, repo) => {
+    const url = `https://api.github.com/repos/${encodeURI(owner)}/${encodeURI(
+      repo
+    )}`;
+    const resp = await fetch(url);
+    const a = await resp.json();
 
-  const url = "https://api.github.com/repos/watermelontools/wm-extension";
-  const fetchApi = async () => {
-    const Response = await fetch(url);
-    const ResponseJson = await Response.json();
-    const ForksJson = ResponseJson.forks;
-    const WatchersJson = ResponseJson.watchers;
-    console.log(ForksJson);
-    console.log(WatchersJson);
-
+    return a;
   };
-  useEffect(() => {
-    fetchApi();
-  }, []);
 
+  const useFetchwm = (owner, repo) => {
+    const [repositorio, setState] = useState({
+      data: [],
+      loading: true,
+    });
+
+    useEffect(() => {
+      getwm(owner, repo).then((repos) => {
+        setState({
+          data: repos,
+          loading: false,
+        });
+      });
+    }, [owner, repo]);
+
+    return repositorio;
+  };
+
+  const { data } = useFetchwm("watermelontools", "wm-extension");
+  console.log(data);
 
   return (
-    <div class="App">
-      <div class="container">
-        <div class="jumbotron jumbotron-fluid mb-3 pt-0 pb-0 bg-lightblue position-relative">
-          <div class="col-md-6 pt-6 pb-6 align-self-center">
-            <h4 class="mb-3">Forks:</h4>
+    <div className="App">
+      <div className="containerP jumbotron jumbotron-fluid mb-3 pt-0 pb-0 bg-white position-relative">
+        <div className="container ch">
+          <div className="jumbotron jumbotron-fluid mb-3 pt-5 pb-5 bg-lightblue position-relative">
+            <h4 className="mb-3 secondfont mb-3 font-weight-bold">Forks:</h4>
+            <p>{data.forks}</p>
+          </div>
+        </div>
+        <div className="container ch">
+          <div className="jumbotron jumbotron-fluid mb-3 pt-5 pb-5 bg-lightblue position-relative">
+            <h4 className="mb-3 secondfont mb-3 font-weight-bold">Watchers:</h4>
+            <p>{data.watchers}</p>
           </div>
         </div>
       </div>
-      <div class="container">
-        <div class="jumbotron jumbotron-fluid mb-3 pt-0 pb-0 bg-lightblue position-relative">
-          <div class="col-md-6 pt-6 pb-6 align-self-center">
-            <h4 class="mb-3">Watchers:</h4>
-          </div>
+      <div className="container">
+        <div className="jumbotron jumbotron-fluid mb-3 pt-0 pb-0 bg-lightblue position-relative">
+          <h4 className="mb-3 secondfont mb-3 font-weight-bold">Members:</h4>
         </div>
       </div>
     </div>
   );
 }
-
 export default App;
